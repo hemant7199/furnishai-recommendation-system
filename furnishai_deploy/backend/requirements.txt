@@ -1,0 +1,17 @@
+fastapi==0.110.3
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+pydantic==2.7.1
+pydantic-settings==2.3.4
+pinecone==3.2.2
+sentence-transformers==2.7.0
+scikit-learn==1.4.2
+langchain==0.2.16
+langchain-core==0.2.43
+langchain-openai==0.1.25
+openai==1.40.0
+Pillow==10.4.0
+pandas==2.2.2
+numpy==1.26.4
+joblib==1.4.2
+requests==2.32.3
