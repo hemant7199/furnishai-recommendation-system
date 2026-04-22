@@ -1,8 +1,46 @@
-# FurnishAI — Ikarus Furniture Recommendation App
+# FurnishAI — Smart Furniture & Home Products Recommendation System
 
-ML-powered furniture recommendation system built on `intern_data_ikarus.csv` (312 products).
+A dataset-driven product recommendation and search system built on **312 home & furniture products** spanning categories like Home & Kitchen, Patio & Garden, Electronics, Tools & Home Improvement, and more — across **264+ brands**.
 
-**Stack:** FastAPI · Pinecone · SentenceTransformers · LangChain · OpenAI GPT-3.5 · ResNet18 · React · Recharts
+**Stack:** FastAPI · Pandas · NumPy · React · Axios · Recharts
+
+🌐 **Live App:** [https://furnishai-recommendation-system.vercel.app](https://furnishai-recommendation-system.vercel.app)
+
+⚙️ **API Docs:** [https://furnishai-recommendation-system.onrender.com/docs](https://furnishai-recommendation-system.onrender.com/docs)
+
+📦 **GitHub:** [https://github.com/hemant7199/furnishai-recommendation-system](https://github.com/hemant7199/furnishai-recommendation-system)
+
+---
+
+## ⚠️ Production Note
+
+To ensure smooth deployment on free-tier cloud services (Render):
+
+- **Pinecone, OpenAI, and Transformer-based models are disabled** in the deployed version
+- The system uses **dataset-based filtering and keyword search** instead of vector search
+- This ensures stability, faster response times, and zero external API dependency failures
+- All core recommendation and analytics features remain fully functional
+
+---
+
+## ✨ Features
+
+- 💬 **Chat-based product search** — dataset-driven conversational query interface
+- 🔍 **Keyword-based recommendation system** — search by title, brand, category, or description
+- 📊 **Analytics dashboard** — product insights and category breakdowns with Recharts
+- 🏷️ **Smart filtering** — filter by category, brand, price range, material, and color
+
+---
+
+## 📦 Dataset
+
+| Field | Details |
+|-------|---------|
+| **File** | `intern_data_ikarus.csv` |
+| **Products** | 312 |
+| **Brands** | 264+ |
+| **Categories** | Home & Kitchen, Patio & Garden, Electronics, Tools & Home Improvement, Baby Products, Beauty & Personal Care, Office Products |
+| **Fields** | `title`, `brand`, `description`, `price`, `categories`, `images`, `manufacturer`, `package_dimensions`, `country_of_origin`, `material`, `color`, `uniq_id` |
 
 ---
 
@@ -18,7 +56,7 @@ cd furnishai_deploy
 # Initialize git
 git init
 git add .
-git commit -m "Initial commit — FurnishAI ikarus"
+git commit -m "Initial commit — FurnishAI"
 
 # Create a repo on github.com, then:
 git remote add origin https://github.com/YOUR_USERNAME/furnishai.git
@@ -36,7 +74,7 @@ git push -u origin main
 4. Render auto-detects Python. Set:
    - **Build Command:**
      ```
-     pip install -r requirements.txt && python -m spacy download en_core_web_sm
+     pip install -r requirements.txt
      ```
    - **Start Command:**
      ```
@@ -44,25 +82,17 @@ git push -u origin main
      ```
    - **Runtime:** Python 3.11
 
-5. Add **Environment Variables** in Render dashboard:
+5. Add **Environment Variables** in the Render dashboard:
 
    | Key | Value |
    |-----|-------|
-   | `PINECONE_API_KEY` | your Pinecone key |
-   | `OPENAI_API_KEY` | your OpenAI key |
-   | `PINECONE_INDEX_NAME` | `ikarus-furniture` |
-   | `PINECONE_ENV` | `us-east-1` |
-   | `HF_MODEL_NAME` | `sentence-transformers/all-MiniLM-L6-v2` |
    | `DATA_PATH` | `data/intern_data_ikarus.csv` |
 
 6. Click **Deploy** — wait ~3 min.
-7. Your backend URL will be: `https://furnishai-backend.onrender.com`
-8. Test it: visit `https://furnishai-backend.onrender.com/health`
+7. Your backend URL: `https://furnishai-recommendation-system.onrender.com`
+8. Health check: visit `/health`
 
-> **After deploy**, run the ingest script **once** locally pointing to your Render backend, or use the Render **Shell** tab:
-> ```bash
-> python utils/ingest_data.py
-> ```
+> No external API keys required. The backend runs entirely on the CSV dataset.
 
 ---
 
@@ -72,14 +102,13 @@ git push -u origin main
 2. Import your GitHub repo
 3. Set **Root Directory** to: `frontend`
 4. Framework preset: **Create React App** (auto-detected)
-5. Add **Environment Variables** in Vercel:
+5. Add **Environment Variable** in Vercel:
 
    | Key | Value |
    |-----|-------|
-   | `REACT_APP_API_URL` | `https://furnishai-backend.onrender.com/api` |
+   | `REACT_APP_API_URL` | `https://furnishai-recommendation-system.onrender.com/api` |
 
 6. Click **Deploy** — done in ~1 min.
-7. Your app URL: `https://furnishai-xxx.vercel.app`
 
 ---
 
@@ -96,17 +125,13 @@ venv\Scripts\activate
 source venv/bin/activate
 
 pip install -r requirements.txt
-python -m spacy download en_core_web_sm
 
 cp .env.example .env
-# Edit .env with your Pinecone + OpenAI keys
-
-# Upload products to Pinecone (run once)
-python utils/ingest_data.py
+# DATA_PATH defaults to data/intern_data_ikarus.csv
 
 # Start server
 uvicorn main:app --reload --port 8000
-# Swagger: http://localhost:8000/docs
+# Swagger UI: http://localhost:8000/docs
 ```
 
 ### Frontend
@@ -117,11 +142,11 @@ npm start
 # Opens: http://localhost:3000
 ```
 
-> Local dev uses CRA proxy — no CORS issues. The `.env.development` file sets `REACT_APP_API_URL` to empty so the proxy is used.
+> Local dev uses CRA proxy — no CORS issues. `.env.development` sets `REACT_APP_API_URL` to empty so the proxy kicks in automatically.
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 furnishai_deploy/
@@ -131,7 +156,7 @@ furnishai_deploy/
 ├── backend/                          ← Deploy on Render
 │   ├── main.py                       ← FastAPI app (CORS: allow_origins=["*"])
 │   ├── config.py                     ← Pydantic v2 settings
-│   ├── requirements.txt              ← CPU torch, pinecone==3.2.2
+│   ├── requirements.txt              ← FastAPI, Pandas, NumPy, Uvicorn
 │   ├── runtime.txt                   ← python-3.11.0
 │   ├── render.yaml                   ← Render config
 │   ├── .env.example                  ← Copy to .env locally
@@ -140,17 +165,14 @@ furnishai_deploy/
 │   ├── models/
 │   │   └── schemas.py                ← Pydantic models
 │   ├── routers/
-│   │   ├── chat.py
-│   │   ├── recommendations.py
-│   │   └── analytics.py
+│   │   ├── chat.py                   ← Keyword-based chat search
+│   │   ├── recommendations.py        ← Dataset filtering & recommendations
+│   │   └── analytics.py              ← Stats & product listing
 │   ├── services/
-│   │   ├── vector_db.py              ← Pinecone v3 API
-│   │   ├── genai_service.py          ← LangChain 0.2.x + GPT-3.5
-│   │   ├── cv_service.py             ← ResNet18 (torchvision weights API)
-│   │   └── nlp_service.py            ← TF-IDF + KMeans + spaCy
+│   │   ├── recommendation_service.py ← Pandas-based filtering logic
+│   │   └── nlp_service.py            ← Keyword extraction & matching
 │   └── utils/
-│       ├── data_utils.py             ← CSV cleaning ($price, list strings)
-│       └── ingest_data.py            ← Pinecone upload script
+│       └── data_utils.py             ← CSV cleaning ($price, list strings)
 │
 ├── frontend/                         ← Deploy on Vercel
 │   ├── vercel.json                   ← SPA routing rewrites
@@ -162,7 +184,7 @@ furnishai_deploy/
 │       ├── App.js
 │       ├── index.js / index.css
 │       ├── pages/
-│       │   ├── ChatPage.js           ← Conversational UI
+│       │   ├── ChatPage.js           ← Conversational search UI
 │       │   └── AnalyticsPage.js      ← Charts + product table
 │       ├── components/
 │       │   ├── Navbar.js
@@ -177,49 +199,46 @@ furnishai_deploy/
 
 ---
 
-## API Endpoints
+## 🔌 API Endpoints
 
 | Method | URL | Description |
 |--------|-----|-------------|
 | GET | `/health` | Health check |
 | GET | `/docs` | Swagger UI |
-| POST | `/api/chat/message` | Conversational recommendations |
-| POST | `/api/recommendations/search` | Semantic search |
+| POST | `/api/chat/message` | Keyword-based product search |
+| POST | `/api/recommendations/search` | Dataset-filtered recommendations |
 | GET | `/api/analytics/summary` | Dataset statistics |
 | GET | `/api/analytics/products` | Paginated product list |
 
 ---
 
-## Environment Variables Reference
+## 🔐 Environment Variables Reference
 
-### Backend (.env)
-```
-PINECONE_API_KEY=pc-xxxxxxxxxxxx
-PINECONE_ENV=us-east-1
-PINECONE_INDEX_NAME=ikarus-furniture
-OPENAI_API_KEY=sk-xxxxxxxxxxxx
-HF_MODEL_NAME=sentence-transformers/all-MiniLM-L6-v2
+### Backend (`.env`)
+```env
 DATA_PATH=data/intern_data_ikarus.csv
-IMAGE_MODEL_PATH=models/image_classifier.pth
 ```
 
 ### Frontend (Vercel Environment Variables)
-```
-REACT_APP_API_URL=https://furnishai-backend.onrender.com/api
+```env
+REACT_APP_API_URL=https://furnishai-recommendation-system.onrender.com/api
 ```
 
 ---
 
-## Fixes Applied (vs previous versions)
+## 🐛 Known Fixes Applied
 
 | Issue | Fix |
 |-------|-----|
-| `pinecone-client` not found | `pinecone==3.2.2` |
-| LangChain import errors | `langchain==0.2.16` + `langchain-core==0.2.38` |
-| `openai_api_key` param error | `api_key=` |
-| `pretrained=True` deprecated | `weights=ResNet18_Weights.IMAGENET1K_V1` |
-| Pydantic `class Config` | `model_config = {}` |
-| torch too heavy for Render | `torch==2.3.1+cpu` from PyTorch CDN |
-| Vercel 404 on refresh | `vercel.json` rewrites |
-| CORS error prod | `allow_origins=["*"]` |
-| Frontend can't reach backend | `REACT_APP_API_URL` env var |
+| Pydantic `class Config` | replaced with `model_config = {}` |
+| Vercel 404 on page refresh | `vercel.json` SPA rewrites |
+| CORS errors in production | `allow_origins=["*"]` in FastAPI |
+| Frontend can't reach backend | set `REACT_APP_API_URL` env var in Vercel |
+| Price column has `$` prefix | stripped in `data_utils.py` |
+| Categories stored as string list | parsed with `ast.literal_eval` |
+
+---
+
+## 👤 Author
+
+**Hemant** — [github.com/hemant7199](https://github.com/hemant7199)
