@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import numpy as np
-from utils.data_utils import load_and_clean
-from config import get_settings
+from backend.utils.data_utils import load_and_clean
+from backend.config import get_settings
 
 router   = APIRouter()
 settings = get_settings()

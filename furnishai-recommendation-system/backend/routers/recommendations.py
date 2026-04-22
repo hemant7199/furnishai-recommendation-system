@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from models.schemas import RecommendationRequest, RecommendationResponse, Product
-from services.vector_db import VectorDBService
-from services.genai_service import GenAIService
-from services.cv_service import ImageClassifierService, FURNITURE_CATEGORIES
+from backend.models.schemas import RecommendationRequest, RecommendationResponse, Product
+from backend.services.vector_db import VectorDBService
+from backend.services.genai_service import GenAIService
+from backend.services.cv_service import ImageClassifierService, FURNITURE_CATEGORIES
 
 router = APIRouter()
 _vdb = _genai = _cv = None

@@ -7,8 +7,9 @@ class Settings(BaseSettings):
     PINECONE_INDEX_NAME: str = "ikarus-furniture"
     OPENAI_API_KEY: str = "your-openai-api-key"
     HF_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
-    DATA_PATH: str = "data/intern_data_ikarus.csv"
-    IMAGE_MODEL_PATH: str = "models/image_classifier.pth"
+
+    DATA_PATH: str = "backend/data/intern_data_ikarus.csv"
+    IMAGE_MODEL_PATH: str = "backend/models/image_classifier.pth"
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
