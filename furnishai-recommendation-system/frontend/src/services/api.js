@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = process.env.REACT_APP_API_URL;
+const BASE = "https://furnishai-recommendation-system.onrender.com";
 
 const API = axios.create({
   baseURL: BASE,
