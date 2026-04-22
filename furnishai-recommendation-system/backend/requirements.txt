@@ -6,5 +6,7 @@ pydantic==1.10.14
 
 pinecone==3.2.2
 openai==1.40.0
-
 requests==2.32.3
+
+pandas==2.2.2
+numpy==1.26.4
