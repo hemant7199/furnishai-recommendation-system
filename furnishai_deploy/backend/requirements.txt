@@ -5,10 +5,6 @@ python-multipart==0.0.9
 pydantic==1.10.14
 
 pinecone==3.2.2
-
-langchain==0.2.16
-langchain-core==0.2.43
-langchain-openai==0.1.25
 openai==1.40.0
 
 requests==2.32.3
