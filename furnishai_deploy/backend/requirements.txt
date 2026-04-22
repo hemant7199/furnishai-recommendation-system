@@ -1,8 +1,9 @@
 fastapi==0.110.3
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
-pydantic==2.7.1
-pydantic-settings==2.3.4
+
+pydantic==1.10.14
+
 pinecone==3.2.2
 
 langchain==0.2.16
