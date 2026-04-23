@@ -2,7 +2,6 @@
 
 A dataset-driven product recommendation and search system built on **312 home & furniture products** spanning categories like Home & Kitchen, Patio & Garden, Electronics, Tools & Home Improvement, and more — across **264+ brands**.
 
-**Stack:** FastAPI · Pandas · NumPy · React · Axios · Recharts
 ## 🧠 Tech Stack
 
 <p align="center">
@@ -15,6 +14,10 @@ A dataset-driven product recommendation and search system built on **312 home & 
   <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
   <img src="https://img.shields.io/badge/Recharts-FF6384?style=for-the-badge"/>
 </p>
+
+---
+
+## 🌐 Links
 
 🌐 **Live App:** [https://furnishai-recommendation-system.vercel.app](https://furnishai-recommendation-system.vercel.app)
 
